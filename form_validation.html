@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+
+        <title>Form Validation using javascript</title>
+        <style></style>
+    </head>
+    <body>
+        <center>
+            <div class="card" style="width: 30%; margin-top: 10%;">
+                <div class="card-body">
+                    <div class="row">
+                        <h3 style="margin-left: 20%;">Form validation</h3>
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" class="form-control" placeholder="First name" id="first_name" name="first_name" onkeypress="checker('first_name')" />
+                            <div class="error" id="error"></div>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" class="form-control" placeholder="Last name" id="last_name" name="last_name" onkeypress="checker('last_name')" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="email" class="form-control" placeholder="Email" id="email" name="email" onkeypress="checker('email')" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="text" class="form-control" placeholder="Password" id="password_1" name="password_1" onkeypress="checker('password_1')" maxlength="10" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="text" class="form-control" placeholder="Re type " id="password_2" name="password_2" onkeypress="checker('password_2')" maxlength="10" />
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="submit" class="btn btn-primary" id="submit" name="submit" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </center>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script>
+   
+
+            function checker(id) {
+                let val = document.getElementById(id).value;
+                console.log(val);
+                let text = val.trim();
+
+                if (id == "first_name" || id == "last_name") {
+                    if (specialCharacterCheck(val, id)) {
+                        document.getElementById(id).style.color = "red";
+              
+                    } else {
+                        document.getElementById(id).style.color = "green";
+                       
+                    }
+                    submit();
+                }
+
+                if (id == "email") {
+                    if (specialCharacterCheck(val, id)) {
+                        document.getElementById(id).style.color = "red";
+               
+                    } else {
+                        document.getElementById(id).style.color = "green";
+                      
+                    }
+                    submit();
+                }
+
+                if (id == "password_1") {
+                    if (val.length <= 3 && val.length >= 0) {
+                        document.getElementById(id).style.color = "black";
+                    } else if (val.length <= 7 && val.length >= 4) {
+                        document.getElementById(id).style.color = "#fcc11e";
+                    } else {
+                        document.getElementById(id).style.color = "green";
+                    }
+                    submit();
+                }
+                if (id == "password_2") {
+                    let password_1 = document.getElementById("password_1").value;
+
+                    if (password_1 == val) {
+                        document.getElementById(id).style.color = "green";
+                    } else {
+                        document.getElementById(id).style.color = "red";
+                    }
+                    submit();
+                }
+            }
+
+            function specialCharacterCheck(name, id) {
+                let special_character = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "-", "+", "=", "/", "<", ">", "?", ",", ".", "~", '"', "'", ";", ":"];
+                if (id == "first_name" || id == "last_name") {
+                    for (let i = 0; i < special_character.length; i++) {
+                        console.log(special_character[i]);
+
+                        if (name.includes(special_character[i])) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                if (id == "email") {
+                    for (let i = 0; i < special_character.length; i++) {
+                        console.log(special_character[i]);
+                        if (special_character[i] != "@" && special_character[i] != ".") {
+                            if (name.includes(special_character[i])) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                }
+            }
+
+            function submit() {
+                let first_name = document.getElementById("first_name").value;
+                let last_name = document.getElementById("last_name").value;
+                let email = document.getElementById("email").value;
+                let password_1 = document.getElementById("password_1").value;
+                let password_2 = document.getElementById("password_2").value;
+                if (first_name == "" || last_name == "" || email == "" || password_1 == "" || password_2 == "") {
+                    document.getElementById("submit").disabled = true;
+                } else {
+                    document.getElementById("submit").disabled = false;
+                }
+            }
+        </script>
+    </body>
+</html>
